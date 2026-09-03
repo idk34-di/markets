@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VERSION 1.1</title>
+<title>VERSION 4.2</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600&display=swap');
 
@@ -143,11 +143,11 @@
 <div class="toast" id="toast"></div>
 
 <header>
-  <div class="logo">MARKET<span>S</span></div>
   <div class="theme-picker">
     <span class="theme-label">THEME</span>
     <div id="theme-dots" style="display:flex;gap:6px;align-items:center"></div>
   </div>
+  <div class="logo">MARKET<span>S</span></div>
   <div class="header-right">
     <span id="contatore" style="font-family:var(--font-mono);font-size:11px;color:var(--text2);margin-right:6px;">👁 …</span>
     <button id="login-btn" class="btn" onclick="accedi()" style="margin-right:6px;">ACCEDI</button>
@@ -321,8 +321,6 @@ let toastTimer=null;
 function showToast(msg,isError=false){const el=document.getElementById('toast');el.textContent=msg;el.className='toast show'+(isError?' error':'');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.className='toast';},2500);}
 function flashLive(){const d=document.getElementById('live-dot');d.classList.add('active');setTimeout(()=>d.classList.remove('active'),1500);}
 
-// ═══════════════ FINNHUB DATA LAYER ═══════════════
-// ⚠️ Get a free key (no credit card) at https://finnhub.io/register and paste it here.
 const FINNHUB_KEY = "d8rc3fhr01qni6thtqagd8rc3fhr01qni6thtqb0";
 const FINNHUB_BASE = "https://finnhub.io/api/v1";
 
