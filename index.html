@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VERSION 4.2</title>
+<title>VERSION 4.4</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600&display=swap');
 
@@ -320,6 +320,12 @@ applyTheme(savedTheme);
 let toastTimer=null;
 function showToast(msg,isError=false){const el=document.getElementById('toast');el.textContent=msg;el.className='toast show'+(isError?' error':'');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.className='toast';},2500);}
 function flashLive(){const d=document.getElementById('live-dot');d.classList.add('active');setTimeout(()=>d.classList.remove('active'),1500);}
+
+// ═══════════════ MONTHLY KEY (for the visit counter, resets automatically each month) ═══════════════
+function monthKey(d){
+  d = d || new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+}
 
 const FINNHUB_KEY = "d8rc3fhr01qni6thtqagd8rc3fhr01qni6thtqb0";
 const FINNHUB_BASE = "https://finnhub.io/api/v1";
@@ -832,9 +838,11 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// ---- Monthly-resetting visit counter (same pattern as the other sites: visite_markets_YYYY-MM) ----
 async function incrementaContatore() {
   try {
-    const ref = db.collection("stats").doc("visite_markets");
+    const docId = "visite_markets_" + monthKey();
+    const ref = db.collection("stats").doc(docId);
     await db.runTransaction(async (t) => {
       const doc = await t.get(ref);
       const attuale = doc.exists ? doc.data().count : 0;
